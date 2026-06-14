@@ -1,0 +1,6 @@
+.venv
+netflix-shows.zip
+__pycache__/
+*.pyc
+chroma_db/
+.env
