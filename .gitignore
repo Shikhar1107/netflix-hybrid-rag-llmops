@@ -1,6 +1,11 @@
-.venv
-netflix-shows.zip
+.venv/
 __pycache__/
 *.pyc
-chroma_db/
 .env
+mlruns/
+mlflow.db
+reports/
+.DS_Store
+
+# Optional if large
+chroma_db/

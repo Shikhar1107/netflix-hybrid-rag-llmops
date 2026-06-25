@@ -16,3 +16,5 @@ logging
 pathlib
 langchain-openai
 python-dotenv
+datasets
+neo4j

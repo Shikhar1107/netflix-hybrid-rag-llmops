@@ -1,6 +1,9 @@
 from src.retrieval.vector_store import load_vector_store
 from src.retrieval.reranker import Reranker
-
+from functools import lru_cache
+@lru_cache(maxsize=1)
+def get_reranker():
+    return Reranker()
 
 def detect_metadata_filters(query: str):
     query_lower = query.lower()
@@ -195,7 +198,7 @@ def apply_manual_filters(documents, filters):
     return filtered_docs
 
 
-def retrieve_documents(query: str, initial_k: int = 50, final_k: int = 5):
+def retrieve_documents(query: str, initial_k: int = 40, final_k: int = 5):
     vector_store = load_vector_store()
 
     filters = detect_metadata_filters(query)
@@ -229,18 +232,18 @@ def retrieve_documents(query: str, initial_k: int = 50, final_k: int = 5):
         print("Too few documents matched filters. Continuing with available filtered results.")
 
 
-    reranker = Reranker()
+    reranker = get_reranker()
 
     reranked_results = reranker.rerank(
         query=search_query,
         documents=filtered_results,
         top_k=final_k,
     )
-    print( {"query": query,
-        "filters": filters,
-        "reference_title": reference_doc.metadata.get("title") if reference_doc else None,
-        "documents": reranked_results,
-    })
+    # print( {"query": query,
+    #     "filters": filters,
+    #     "reference_title": reference_doc.metadata.get("title") if reference_doc else None,
+    #     "documents": reranked_results,
+    # })
     return {
         "query": query,
         "filters": filters,

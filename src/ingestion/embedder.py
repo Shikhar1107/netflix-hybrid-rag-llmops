@@ -3,8 +3,9 @@ from langchain_chroma import Chroma
 import torch
 from src.ingestion.loader import load_netflix_data
 from src.ingestion.chunker import create_documents
+from functools import lru_cache
 
-
+@lru_cache(maxsize=1)
 def get_embedding_model():
     embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5",model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},encode_kwargs={"normalize_embeddings": True})
 

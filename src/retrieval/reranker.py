@@ -1,4 +1,5 @@
 from sentence_transformers import CrossEncoder
+from functools import lru_cache
 
 RERANKER_MODEL_NAME = 'cross-encoder/ms-marco-MiniLM-L-6-v2'
 
@@ -27,3 +28,7 @@ class Reranker:
             }
             for score,doc in reranked_results[:top_k]
         ]
+
+@lru_cache(maxsize=1)
+def get_reranker_model():
+    return CrossEncoder(RERANKER_MODEL_NAME)

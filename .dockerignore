@@ -1,0 +1,11 @@
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+mlruns
+mlflow.db
+reports
+chroma_db
+.DS_Store
